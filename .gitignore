@@ -40,3 +40,6 @@ msbuild.wrn
 *.db
 *.sqlite
 *.db3
+
+*.Development.json
+appsettings.Development.json

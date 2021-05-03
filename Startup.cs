@@ -12,6 +12,7 @@ using proyecto.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using proyecto.Services;
 
 namespace proyecto
 {
@@ -32,6 +33,7 @@ namespace proyecto
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
+            services.AddScoped<S3Service>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
