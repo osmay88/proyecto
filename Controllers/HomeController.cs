@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using proyecto.Data;
+using proyecto.Dts;
 using proyecto.Models;
 using proyecto.Services;
 
@@ -15,18 +17,30 @@ namespace proyecto.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly S3Service service;
+        private readonly ImagesRepository imageRepo;
 
-        public HomeController(ILogger<HomeController> logger, S3Service service)
+        public HomeController(ILogger<HomeController> logger, S3Service service, ImagesRepository imageRepo)
         {
             _logger = logger;
             this.service = service;
+            this.imageRepo = imageRepo;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(UploadForm model)
         {
             using (var memoryStream = new MemoryStream())
             {
-                await service.uploadAsync(memoryStream, "Aloha", "tovarish");
+                await model.FormFile.CopyToAsync(memoryStream);
+                var filename = await service.uploadAsync(memoryStream, model.FormFile.FileName);
+                await this.imageRepo.addImage(filename, model.Description, model.Title, model.Tags);
+                ViewBag.filename = filename;
             }
 
             return View();

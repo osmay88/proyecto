@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using proyecto.Models;
 
 namespace proyecto.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class WebAppDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public WebAppDbContext(DbContextOptions<WebAppDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<ImageFile> ImageFiles { get; set; }
     }
 }

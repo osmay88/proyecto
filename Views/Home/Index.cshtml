@@ -1,8 +1,60 @@
-﻿@{
+﻿@model proyecto.Dts.UploadForm
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+
+    <form enctype="multipart/form-data" method="post">
+        <dl class="form-group">
+            <dt>
+                <label asp-for="FormFile"></label>
+            </dt>
+            <dd>
+                <input class="" asp-for="FormFile" type="file">
+            </dd>
+        </dl>
+        <dl class="form-group">
+            <dt>
+                <label asp-for="Title"></label>
+            </dt>
+            <dd>
+                <input class="form-control" asp-for="Title" type="text">
+            </dd>
+        </dl>
+
+        <dl class="form-group">
+            <dt>
+                <label asp-for="Description"></label>
+            </dt>
+            <dd>
+                <textarea asp-for="Description" cols="30" rows="10"></textarea>
+            </dd>
+        </dl>
+
+        <dl class="form-goup">
+            <dt>
+                <label asp-for="Tags"></label>
+            </dt>
+            <dd>
+                <input class="form-control" asp-for="Tags" type="text">
+            </dd>
+        </dl>
+
+        <input asp-page-handler="Upload" class="btn btn-success" type="submit" value="Upload">
+    </form>
+    @if (ViewBag.filename != null)
+    {
+        <div>
+            <label>@ViewBag.filename</label>
+        </div>
+
+    }
 </div>

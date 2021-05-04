@@ -28,12 +28,14 @@ namespace proyecto
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<WebAppDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
             services.AddScoped<S3Service>();
+            services.AddScoped<ImagesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
